@@ -4,9 +4,9 @@ using QuanLiPhongKham.Data;
 using QuanLiPhongKham.Models;
 using QuanLiPhongKham.Models.Authentication;
 using QuanLiPhongKham.Models.Login_User;
-using QuanLiPhongKham.Services;
+using QuanLiPhongKham.Services.IRepository;
 
-namespace QuanLiPhongKham.Controllers
+namespace QuanLiPhongKham.Controllers.Admin
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -56,7 +56,7 @@ namespace QuanLiPhongKham.Controllers
             try
             {
                 var account = _accountRepo.GetAccountByEmail(model.Email);
-                if(account != null)
+                if (account != null)
                 {
                     return BadRequest("Email Exist!");
                 }
@@ -69,18 +69,20 @@ namespace QuanLiPhongKham.Controllers
             }
         }
 
+        //Login
         [HttpPost("/login")]
         public IActionResult Login(LoginModel model)
         {
             try
             {
                 var account = _accountRepo.GetAccountByEmail(model.Email);
-                if(account != null)
+                if (account != null)
                 {
                     var result = _accountRepo.Login(model);
-                    if(result == null)
+                    if (result == null)
                     {
                         return BadRequest("Login Fail");
+
                     }
                     return Ok(result);
                 }
@@ -93,38 +95,34 @@ namespace QuanLiPhongKham.Controllers
         }
 
         //put data update
-        [HttpPut("{id}")]
-        public IActionResult UpdateAccount(int id, AccountModel model)
+        [HttpPut("{email}")]
+        public IActionResult Update(string email, AccountModel model)
         {
-            var ListAccounts = _context.Accounts.SingleOrDefault(acc => acc.AccountId == id);
-
-            if (ListAccounts != null)
+            if(email != model.Email)
             {
-                ListAccounts.FullName = model.FullName;
-                ListAccounts.Email = model.Email;
-                ListAccounts.Img = model.Img;
-                ListAccounts.PhoneNumber = model.PhoneNumber;
-                ListAccounts.UserName = model.UserName;
-                ListAccounts.Password = model.Password;
-                ListAccounts.RoleId = model.RoleId;
-                ListAccounts.Status = model.Status;
-                _context.SaveChanges();
-                return NoContent();
+                return BadRequest("Email Exist!");
             }
-            else { return NotFound(); }
+            try
+            {
+                var result = _accountRepo.UpdateAccount(model);
+                return Ok(result);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         //delete
-        [HttpDelete("{id}")]
-        public IActionResult RemoveAccount(int id)
+        [HttpDelete("{email}")]
+        public IActionResult RemoveAccount(string email)
         {
-            var ListAccounts = _context.Accounts.SingleOrDefault(acc => acc.AccountId == id);
+            var ListAccounts = _context.Accounts.SingleOrDefault(acc => acc.Email == email);
 
             if (ListAccounts != null)
             {
-                _context.Accounts.Remove(ListAccounts);
-                _context.SaveChanges();
-                return Ok();
+                var result = _accountRepo.DeleteAccount(email);
+                return Ok(result);
             }
             else { return NotFound(); }
         }

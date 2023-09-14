@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace QuanLiPhongKham.Data
+namespace QuanLiPhongKham.Data.User
 {
     [Table("BHYTS")]
     public class BHYT
@@ -15,7 +15,7 @@ namespace QuanLiPhongKham.Data
         public string FullName { get; set; } = string.Empty;
 
         [Required]
-        public string PhoneNumber { get; set; } = String.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
 
         [Required]
         [MaxLength(150)]

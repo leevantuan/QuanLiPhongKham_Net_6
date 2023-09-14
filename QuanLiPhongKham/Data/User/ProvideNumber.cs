@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace QuanLiPhongKham.Data
+namespace QuanLiPhongKham.Data.User
 {
     [Table("ProvideNumbers")]
     public class ProvideNumber
@@ -11,16 +11,16 @@ namespace QuanLiPhongKham.Data
         public int ProvideNumberId { get; set; }
 
         [Required]
-        public string FullName { get; set; } = String.Empty;
+        public string FullName { get; set; } = string.Empty;
 
         [Required]
-        public string PhoneNumber { get; set; } = String.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
 
         [Required]
-        public string StartDate { get; set; } = String.Empty;
+        public string StartDate { get; set; } = string.Empty;
 
         [Required]
-        public string EndtDate { get; set; } = String.Empty;
+        public string EndtDate { get; set; } = string.Empty;
 
         [Required]
         public double Price { get; set; }

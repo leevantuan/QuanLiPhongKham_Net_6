@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QuanLiPhongKham.Data;
+using QuanLiPhongKham.Data.User;
 using QuanLiPhongKham.Models;
 
-namespace QuanLiPhongKham.Controllers
+namespace QuanLiPhongKham.Controllers.User
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProvideNumberController : ControllerBase
+    public class BHYTController : ControllerBase
     {
         private readonly MyContext _context;
 
-        public ProvideNumberController(MyContext context)
+        public BHYTController(MyContext context)
         {
             _context = context;
         }
@@ -20,7 +21,7 @@ namespace QuanLiPhongKham.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var Lists = _context.ProvideNumbers.ToList();
+            var Lists = _context.Bhyts.ToList();
             return Ok(Lists);
         }
 
@@ -29,7 +30,7 @@ namespace QuanLiPhongKham.Controllers
         public IActionResult GetById(int id)
         {
             //SingleOrDefault Methor tìm kiếm có hoặc không
-            var Lists = _context.ProvideNumbers.SingleOrDefault(provide => provide.ProvideNumberId == id);
+            var Lists = _context.Bhyts.SingleOrDefault(e => e.BHYTId == id);
 
             if (Lists != null)
             {
@@ -40,23 +41,24 @@ namespace QuanLiPhongKham.Controllers
 
         //post data create
         [HttpPost]
-        public IActionResult CreateNew(ProvideNumberModel model)
+        public IActionResult CreateNew(BHYTModel model)
         {
             try
             {
-                var provide = new ProvideNumber
+                var Bhyt = new BHYT
                 {
                     FullName = model.FullName,
                     PhoneNumber = model.PhoneNumber,
+                    Address = model.Address,
+                    Birthday = model.Birthday,
+                    Professtion = model.Professtion,
                     StartDate = model.StartDate,
-                    EndtDate = model.EndtDate,
-                    Price = model.Price,
-                    ServiceId = model.ServiceId,
+                    EndDate = model.EndDate,
                 };
 
-                _context.Add(provide);
+                _context.Add(Bhyt);
                 _context.SaveChanges();
-                return Ok(provide);
+                return Ok(Bhyt);
             }
             catch
             {
@@ -67,18 +69,19 @@ namespace QuanLiPhongKham.Controllers
 
         //put data update
         [HttpPut("{id}")]
-        public IActionResult Update(int id, ProvideNumberModel model)
+        public IActionResult Update(int id, BHYTModel model)
         {
-            var Lists = _context.ProvideNumbers.SingleOrDefault(provide => provide.ProvideNumberId == id);
+            var Lists = _context.Bhyts.SingleOrDefault(e => e.BHYTId == id);
 
             if (Lists != null)
             {
                 Lists.FullName = model.FullName;
                 Lists.PhoneNumber = model.PhoneNumber;
+                Lists.Address = model.Address;
+                Lists.Birthday = model.Birthday;
+                Lists.Professtion = model.Professtion;
                 Lists.StartDate = model.StartDate;
-                Lists.EndtDate = model.EndtDate;
-                Lists.Price = model.Price;
-                Lists.ServiceId = model.ServiceId;
+                Lists.EndDate = model.EndDate;
                 Lists.Status = model.Status;
                 _context.SaveChanges();
                 return NoContent();
@@ -90,11 +93,11 @@ namespace QuanLiPhongKham.Controllers
         [HttpDelete("{id}")]
         public IActionResult Remove(int id)
         {
-            var Lists = _context.ProvideNumbers.SingleOrDefault(provide => provide.ProvideNumberId == id);
+            var Lists = _context.Bhyts.SingleOrDefault(e => e.BHYTId == id);
 
             if (Lists != null)
             {
-                _context.ProvideNumbers.Remove(Lists);
+                _context.Bhyts.Remove(Lists);
                 _context.SaveChanges();
                 return Ok();
             }

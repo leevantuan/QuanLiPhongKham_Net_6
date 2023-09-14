@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QuanLiPhongKham.Data;
+using QuanLiPhongKham.Data.User;
 using QuanLiPhongKham.Models;
 
-namespace QuanLiPhongKham.Controllers
+namespace QuanLiPhongKham.Controllers.User
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ServiceController : ControllerBase
+    public class RoomController : ControllerBase
     {
         private readonly MyContext _context;
 
-        public ServiceController(MyContext context)
+        public RoomController(MyContext context)
         {
             _context = context;
         }
@@ -20,8 +21,8 @@ namespace QuanLiPhongKham.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var ListServices = _context.Services.ToList();
-            return Ok(ListServices);
+            var Lists = _context.Rooms.ToList();
+            return Ok(Lists);
         }
 
         //get data by id
@@ -29,31 +30,29 @@ namespace QuanLiPhongKham.Controllers
         public IActionResult GetById(int id)
         {
             //SingleOrDefault Methor tìm kiếm có hoặc không
-            var ListServices = _context.Services.SingleOrDefault(service => service.ServiceId == id);
+            var Lists = _context.Rooms.SingleOrDefault(room => room.RoomId == id);
 
-            if (ListServices != null)
+            if (Lists != null)
             {
-                return Ok(ListServices);
+                return Ok(Lists);
             }
             else { return NotFound(); }
         }
 
         //post data create
         [HttpPost]
-        public IActionResult CreateNew(ServiceModel model)
+        public IActionResult CreateNew(RoomModel model)
         {
             try
             {
-                var service = new Service 
+                var room = new Room
                 {
-                    ServiceName = model.ServiceName,
-                    Price = model.Price,
-                    RoomId = model.RoomId,
+                    RoomName = model.RoomName,
                 };
 
-                _context.Add(service);
+                _context.Add(room);
                 _context.SaveChanges();
-                return Ok(service);
+                return Ok(room);
             }
             catch
             {
@@ -64,15 +63,13 @@ namespace QuanLiPhongKham.Controllers
 
         //put data update
         [HttpPut("{id}")]
-        public IActionResult Update(int id, ServiceModel model)
+        public IActionResult Update(int id, RoomModel model)
         {
-            var Lists = _context.Services.SingleOrDefault(service => service.ServiceId == id);
+            var Lists = _context.Rooms.SingleOrDefault(room => room.RoomId == id);
 
             if (Lists != null)
             {
-                Lists.ServiceName = model.ServiceName;
-                Lists.Price = model.Price;
-                Lists.RoomId = model.RoomId;
+                Lists.RoomName = model.RoomName;
                 Lists.Status = model.Status;
                 _context.SaveChanges();
                 return NoContent();
@@ -84,11 +81,11 @@ namespace QuanLiPhongKham.Controllers
         [HttpDelete("{id}")]
         public IActionResult Remove(int id)
         {
-            var Lists = _context.Services.SingleOrDefault(service => service.ServiceId == id);
+            var Lists = _context.Rooms.SingleOrDefault(room => room.RoomId == id);
 
             if (Lists != null)
             {
-                _context.Services.Remove(Lists);
+                _context.Rooms.Remove(Lists);
                 _context.SaveChanges();
                 return Ok();
             }

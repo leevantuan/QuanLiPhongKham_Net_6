@@ -1,18 +1,18 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QuanLiPhongKham.Data;
+using QuanLiPhongKham.Data.User;
 using QuanLiPhongKham.Models;
-using System.Net;
 
-namespace QuanLiPhongKham.Controllers
+namespace QuanLiPhongKham.Controllers.User
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DoctorController : ControllerBase
+    public class ServiceController : ControllerBase
     {
         private readonly MyContext _context;
 
-        public DoctorController(MyContext context)
+        public ServiceController(MyContext context)
         {
             _context = context;
         }
@@ -21,8 +21,8 @@ namespace QuanLiPhongKham.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var Lists = _context.Doctors.ToList();
-            return Ok(Lists);
+            var ListServices = _context.Services.ToList();
+            return Ok(ListServices);
         }
 
         //get data by id
@@ -30,35 +30,31 @@ namespace QuanLiPhongKham.Controllers
         public IActionResult GetById(int id)
         {
             //SingleOrDefault Methor tìm kiếm có hoặc không
-            var Lists = _context.Doctors.SingleOrDefault(doctor => doctor.DoctorId == id);
+            var ListServices = _context.Services.SingleOrDefault(service => service.ServiceId == id);
 
-            if (Lists != null)
+            if (ListServices != null)
             {
-                return Ok(Lists);
+                return Ok(ListServices);
             }
             else { return NotFound(); }
         }
 
         //post data create
         [HttpPost]
-        public IActionResult CreateNew(DoctorModel model)
+        public IActionResult CreateNew(ServiceModel model)
         {
             try
             {
-                var doctor = new Doctor
+                var service = new Service
                 {
-                    DoctorName = model.DoctorName,
-                    PhoneNumber = model.PhoneNumber,
-                    Address = model.Address,
-                    BirthDay = model.BirthDay,
-                    DateWork = model.DateWork,
-                    Professtional = model.Professtional,
+                    ServiceName = model.ServiceName,
+                    Price = model.Price,
                     RoomId = model.RoomId,
                 };
 
-                _context.Add(doctor);
+                _context.Add(service);
                 _context.SaveChanges();
-                return Ok(doctor);
+                return Ok(service);
             }
             catch
             {
@@ -69,18 +65,14 @@ namespace QuanLiPhongKham.Controllers
 
         //put data update
         [HttpPut("{id}")]
-        public IActionResult Update(int id, DoctorModel model)
+        public IActionResult Update(int id, ServiceModel model)
         {
-            var Lists = _context.Doctors.SingleOrDefault(doctor => doctor.DoctorId == id);
+            var Lists = _context.Services.SingleOrDefault(service => service.ServiceId == id);
 
             if (Lists != null)
             {
-                Lists.DoctorName = model.DoctorName;
-                Lists.PhoneNumber = model.PhoneNumber;
-                Lists.Address = model.Address;
-                Lists.BirthDay = model.BirthDay;
-                Lists.DateWork = model.DateWork;
-                Lists.Professtional = model.Professtional;
+                Lists.ServiceName = model.ServiceName;
+                Lists.Price = model.Price;
                 Lists.RoomId = model.RoomId;
                 Lists.Status = model.Status;
                 _context.SaveChanges();
@@ -93,11 +85,11 @@ namespace QuanLiPhongKham.Controllers
         [HttpDelete("{id}")]
         public IActionResult Remove(int id)
         {
-            var Lists = _context.Doctors.SingleOrDefault(doctor => doctor.DoctorId == id);
+            var Lists = _context.Services.SingleOrDefault(service => service.ServiceId == id);
 
             if (Lists != null)
             {
-                _context.Doctors.Remove(Lists);
+                _context.Services.Remove(Lists);
                 _context.SaveChanges();
                 return Ok();
             }

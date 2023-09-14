@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace QuanLiPhongKham.Data
+namespace QuanLiPhongKham.Data.User
 {
     [Table("Services")]
     public class Service

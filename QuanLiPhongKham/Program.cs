@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using QuanLiPhongKham.Data;
 using QuanLiPhongKham.Services;
+using QuanLiPhongKham.Services.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 

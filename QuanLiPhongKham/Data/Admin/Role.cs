@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace QuanLiPhongKham.Data
+namespace QuanLiPhongKham.Data.Admin
 {
     [Table("Roles")]
     public class Role
@@ -11,9 +11,9 @@ namespace QuanLiPhongKham.Data
         public int RoleId { get; set; }
 
         [Required]
-        public string RoleName { get; set; } = String.Empty;
+        public string RoleName { get; set; } = string.Empty;
 
-        public string Describe { get; set; } = String.Empty;
+        public string Describe { get; set; } = string.Empty;
 
         public bool Status { get; set; } = true;
 

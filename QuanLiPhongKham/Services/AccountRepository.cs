@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using QuanLiPhongKham.Data;
+using QuanLiPhongKham.Data.Admin;
 using QuanLiPhongKham.Models;
 using QuanLiPhongKham.Models.Authentication;
 using QuanLiPhongKham.Models.Login_User;
+using QuanLiPhongKham.Services.IRepository;
 
 namespace QuanLiPhongKham.Services
 {
@@ -86,6 +88,50 @@ namespace QuanLiPhongKham.Services
                 var result = _context.SaveChanges();
                 if (result == 1) return true;
                 return false;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public bool UpdateAccount(AccountModel _account)
+        {
+            try
+            {
+                var account = _context.Accounts.FirstOrDefault(e => e.Email == _account.Email);
+                if (account != null)
+                {
+                    account.Email = _account.Email;
+                    account.FullName = _account.FullName;
+                    account.PhoneNumber = _account.PhoneNumber;
+                    account.UserName = _account.UserName;
+                    account.Password = _account.Password;
+                    account.Status = _account.Status;
+                    account.RoleId = _account.RoleId;
+                    var result = _context.SaveChanges();
+                    if(result == 1) return true;
+                    return false;
+                } return false;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public bool DeleteAccount(string email)
+        {
+            try
+            {
+                var account = _context.Accounts.FirstOrDefault(account => account.Email == email);
+                if (account != null)
+                {
+                    _context.Remove(account);
+                    _context.SaveChanges();
+                    return true;
+                }
+                else { return false; }
             }
             catch (Exception)
             {

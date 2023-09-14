@@ -1,6 +1,8 @@
 ﻿using QuanLiPhongKham.Data;
+using QuanLiPhongKham.Data.Admin;
 using QuanLiPhongKham.Models;
 using QuanLiPhongKham.Models.View_Model;
+using QuanLiPhongKham.Services.IRepository;
 using System.Data;
 
 namespace QuanLiPhongKham.Services

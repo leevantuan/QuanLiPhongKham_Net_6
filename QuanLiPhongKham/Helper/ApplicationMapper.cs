@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using QuanLiPhongKham.Data;
+using QuanLiPhongKham.Data.Admin;
 using QuanLiPhongKham.Models;
 using QuanLiPhongKham.Models.Authentication;
 

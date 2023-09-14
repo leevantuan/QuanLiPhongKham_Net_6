@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using QuanLiPhongKham.Data;
 using QuanLiPhongKham.Models;
 using QuanLiPhongKham.Models.View_Model;
-using QuanLiPhongKham.Services;
+using QuanLiPhongKham.Services.IRepository;
 using System.Data;
 using System.Net;
 
-namespace QuanLiPhongKham.Controllers
+namespace QuanLiPhongKham.Controllers.Admin
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -15,7 +15,7 @@ namespace QuanLiPhongKham.Controllers
     {
         private readonly IRoleRepository _repo;
 
-        public RoleController(IRoleRepository repo) 
+        public RoleController(IRoleRepository repo)
         {
             _repo = repo;
         }
@@ -39,7 +39,7 @@ namespace QuanLiPhongKham.Controllers
             try
             {
                 var data = _repo.GetById(id);
-                if(data != null) 
+                if (data != null)
                 {
                     return Ok(data);
                 }
@@ -57,7 +57,7 @@ namespace QuanLiPhongKham.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(RoleView role, int id)
         {
-            if(id != role.RoleId)
+            if (id != role.RoleId)
             {
                 return StatusCode(StatusCodes.Status400BadRequest);
             }
@@ -72,7 +72,7 @@ namespace QuanLiPhongKham.Controllers
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError);
                 }
-            }  
+            }
         }
 
         [HttpDelete("{id}")]

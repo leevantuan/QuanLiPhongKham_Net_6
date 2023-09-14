@@ -1,7 +1,7 @@
 ﻿using QuanLiPhongKham.Models;
 using QuanLiPhongKham.Models.View_Model;
 
-namespace QuanLiPhongKham.Services
+namespace QuanLiPhongKham.Services.IRepository
 {
     public interface IRoleRepository
     {

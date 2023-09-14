@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using QuanLiPhongKham.Data.Admin;
+using QuanLiPhongKham.Data.User;
 
 namespace QuanLiPhongKham.Data
 {
