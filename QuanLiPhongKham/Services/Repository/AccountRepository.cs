@@ -6,7 +6,7 @@ using QuanLiPhongKham.Models.Authentication;
 using QuanLiPhongKham.Models.Login_User;
 using QuanLiPhongKham.Services.IRepository;
 
-namespace QuanLiPhongKham.Services
+namespace QuanLiPhongKham.Services.Repository
 {
     public class AccountRepository : IAccountRepository
     {
@@ -21,8 +21,8 @@ namespace QuanLiPhongKham.Services
         public bool SignUp(SignUpModel model)
         {
             try
-            {             
-                return(AddAccount(_mapper.Map<Account>(model)));               
+            {
+                return AddAccount(_mapper.Map<Account>(model));
             }
             catch
             {
@@ -36,7 +36,7 @@ namespace QuanLiPhongKham.Services
             {
 
                 var account = GetAccountByEmail(model.Email);
-                if(account.Password == model.Password)
+                if (account.Password == model.Password)
                 {
                     LoginResponseModel res = new LoginResponseModel();
                     res.Email = account.Email;
@@ -110,9 +110,10 @@ namespace QuanLiPhongKham.Services
                     account.Status = _account.Status;
                     account.RoleId = _account.RoleId;
                     var result = _context.SaveChanges();
-                    if(result == 1) return true;
+                    if (result == 1) return true;
                     return false;
-                } return false;
+                }
+                return false;
             }
             catch (Exception)
             {

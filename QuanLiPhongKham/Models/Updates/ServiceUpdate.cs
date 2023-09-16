@@ -1,16 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace QuanLiPhongKham.Models
+namespace QuanLiPhongKham.Models.Updates
 {
-    public class ServiceModel
+    public class ServiceUpdate
     {
-        [Required]
+        public int ServiceId { get; set; }
+
         public string ServiceName { get; set; } = string.Empty;
 
-        [Required]
         public double Price { get; set; } = double.MaxValue;
 
-        public bool Status { get; set; }
+        public bool Status { get; set; } = true;
 
         public int RoomId { get; set; }
     }

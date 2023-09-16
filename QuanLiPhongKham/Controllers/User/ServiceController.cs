@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using QuanLiPhongKham.Data;
 using QuanLiPhongKham.Data.User;
 using QuanLiPhongKham.Models;
+using QuanLiPhongKham.Models.Updates;
+using QuanLiPhongKham.Services.IRepository;
 
 namespace QuanLiPhongKham.Controllers.User
 {
@@ -11,32 +13,40 @@ namespace QuanLiPhongKham.Controllers.User
     public class ServiceController : ControllerBase
     {
         private readonly MyContext _context;
+        private readonly IServiceRepository _serviceRepo;
 
-        public ServiceController(MyContext context)
+        public ServiceController(MyContext context, IServiceRepository service)
         {
             _context = context;
+            _serviceRepo = service;
         }
 
         //get danh sách trong API
         [HttpGet]
         public IActionResult GetAll()
         {
-            var ListServices = _context.Services.ToList();
-            return Ok(ListServices);
+           try
+            {
+                return Ok(_serviceRepo.GetAll());
+            }
+            catch (Exception)
+            {
+               throw;
+            }
         }
 
         //get data by id
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            //SingleOrDefault Methor tìm kiếm có hoặc không
-            var ListServices = _context.Services.SingleOrDefault(service => service.ServiceId == id);
-
-            if (ListServices != null)
+            try
             {
-                return Ok(ListServices);
+                return Ok(_serviceRepo.GetById(id));
             }
-            else { return NotFound(); }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         //post data create
@@ -45,55 +55,46 @@ namespace QuanLiPhongKham.Controllers.User
         {
             try
             {
-                var service = new Service
-                {
-                    ServiceName = model.ServiceName,
-                    Price = model.Price,
-                    RoomId = model.RoomId,
-                };
-
-                _context.Add(service);
-                _context.SaveChanges();
-                return Ok(service);
+                return Ok(_serviceRepo.Add(model));
             }
-            catch
+            catch (Exception)
             {
-                return BadRequest();
+                //return BadRequest("Create fail!");
+                throw;
             }
 
         }
 
         //put data update
         [HttpPut("{id}")]
-        public IActionResult Update(int id, ServiceModel model)
+        public IActionResult Update(int id, ServiceUpdate model)
         {
-            var Lists = _context.Services.SingleOrDefault(service => service.ServiceId == id);
-
-            if (Lists != null)
+            if(model.ServiceId != id)
             {
-                Lists.ServiceName = model.ServiceName;
-                Lists.Price = model.Price;
-                Lists.RoomId = model.RoomId;
-                Lists.Status = model.Status;
-                _context.SaveChanges();
-                return NoContent();
+                return BadRequest("Id exist!");
             }
-            else { return NotFound(); }
+            try
+            {
+                return Ok(_serviceRepo.Update(model));
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         //delete
         [HttpDelete("{id}")]
         public IActionResult Remove(int id)
         {
-            var Lists = _context.Services.SingleOrDefault(service => service.ServiceId == id);
-
-            if (Lists != null)
+            try
             {
-                _context.Services.Remove(Lists);
-                _context.SaveChanges();
-                return Ok();
+                return Ok(_serviceRepo.Delete(id));
             }
-            else { return NotFound(); }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
     }
 }

@@ -1,22 +1,22 @@
 ﻿using QuanLiPhongKham.Data;
 using QuanLiPhongKham.Data.Admin;
 using QuanLiPhongKham.Models;
-using QuanLiPhongKham.Models.View_Model;
+using QuanLiPhongKham.Models.Updates;
 using QuanLiPhongKham.Services.IRepository;
 using System.Data;
 
-namespace QuanLiPhongKham.Services
+namespace QuanLiPhongKham.Services.Repository
 {
     public class RoleRepository : IRoleRepository
     {
         private readonly MyContext _context;
 
-        public RoleRepository(MyContext context) 
+        public RoleRepository(MyContext context)
         {
             _context = context;
         }
 
-        public RoleView Add(RoleModel role)
+        public RoleUpdate Add(RoleModel role)
         {
             var _role = new Role
             {
@@ -27,7 +27,7 @@ namespace QuanLiPhongKham.Services
             _context.Add(_role);
             _context.SaveChanges();
 
-            return new RoleView
+            return new RoleUpdate
             {
                 RoleId = _role.RoleId,
                 RoleName = _role.RoleName,
@@ -46,11 +46,11 @@ namespace QuanLiPhongKham.Services
             }
         }
 
-        public List<RoleView> GetAll()
+        public List<RoleUpdate> GetAll()
         {
-            var list = _context.Roles.Select(role => new RoleView
+            var list = _context.Roles.Select(role => new RoleUpdate
             {
-                RoleId = role.RoleId, 
+                RoleId = role.RoleId,
                 RoleName = role.RoleName,
                 Describe = role.Describe,
                 Status = role.Status,
@@ -58,12 +58,12 @@ namespace QuanLiPhongKham.Services
             return list.ToList();
         }
 
-        public RoleView GetById(int id)
+        public RoleUpdate GetById(int id)
         {
             var list = _context.Roles.SingleOrDefault(role => role.RoleId == id);
-            if(list != null) 
+            if (list != null)
             {
-                return new RoleView
+                return new RoleUpdate
                 {
                     RoleId = list.RoleId,
                     RoleName = list.RoleName,
@@ -77,7 +77,7 @@ namespace QuanLiPhongKham.Services
             }
         }
 
-        public void Update(RoleView _role)
+        public void Update(RoleUpdate _role)
         {
             var list = _context.Roles.SingleOrDefault(role => role.RoleId == _role.RoleId);
             if (list != null)

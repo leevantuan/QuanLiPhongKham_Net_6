@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using QuanLiPhongKham.Data;
 using QuanLiPhongKham.Models;
-using QuanLiPhongKham.Models.View_Model;
+using QuanLiPhongKham.Models.Updates;
 using QuanLiPhongKham.Services.IRepository;
 using System.Data;
 using System.Net;
@@ -55,7 +55,7 @@ namespace QuanLiPhongKham.Controllers.Admin
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(RoleView role, int id)
+        public IActionResult Update(RoleUpdate role, int id)
         {
             if (id != role.RoleId)
             {

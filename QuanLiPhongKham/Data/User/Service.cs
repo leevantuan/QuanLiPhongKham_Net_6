@@ -18,7 +18,7 @@ namespace QuanLiPhongKham.Data.User
 
         public bool Status { get; set; } = true;
 
-        public int? RoomId { get; set; }
+        public int RoomId { get; set; }
         [ForeignKey("RoomId")]
         public Room Room { get; set; }
 

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using QuanLiPhongKham.Data;
-using QuanLiPhongKham.Services;
 using QuanLiPhongKham.Services.IRepository;
+using QuanLiPhongKham.Services.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +14,10 @@ builder.Services.AddDbContext<MyContext>(options =>
 });
 //add Interface
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IDoctorRepsitory, DoctorRepository>();
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 
 //Add automapper
 builder.Services.AddAutoMapper(typeof(Program));
