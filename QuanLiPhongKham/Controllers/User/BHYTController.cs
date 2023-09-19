@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using QuanLiPhongKham.Data;
 using QuanLiPhongKham.Data.User;
 using QuanLiPhongKham.Models;
+using QuanLiPhongKham.Models.Update_Get_Model;
+using QuanLiPhongKham.Services.IRepository;
 
 namespace QuanLiPhongKham.Controllers.User
 {
@@ -11,32 +13,40 @@ namespace QuanLiPhongKham.Controllers.User
     public class BHYTController : ControllerBase
     {
         private readonly MyContext _context;
+        private readonly IBHYTRepository _bhytRepo;
 
-        public BHYTController(MyContext context)
+        public BHYTController(MyContext context, IBHYTRepository bhyt)
         {
             _context = context;
+            _bhytRepo = bhyt;
         }
 
         //get danh sách trong API
         [HttpGet]
         public IActionResult GetAll()
         {
-            var Lists = _context.Bhyts.ToList();
-            return Ok(Lists);
+            try
+            {
+                return Ok(_bhytRepo.GetAll());
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
 
         //get data by id
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            //SingleOrDefault Methor tìm kiếm có hoặc không
-            var Lists = _context.Bhyts.SingleOrDefault(e => e.BHYTId == id);
-
-            if (Lists != null)
+            try
             {
-                return Ok(Lists);
+                return Ok(_bhytRepo.GetById(id));
             }
-            else { return NotFound(); }
+            catch
+            {
+                return NotFound();
+            }
         }
 
         //post data create
@@ -45,20 +55,7 @@ namespace QuanLiPhongKham.Controllers.User
         {
             try
             {
-                var Bhyt = new BHYT
-                {
-                    FullName = model.FullName,
-                    PhoneNumber = model.PhoneNumber,
-                    Address = model.Address,
-                    Birthday = model.Birthday,
-                    Professtion = model.Professtion,
-                    StartDate = model.StartDate,
-                    EndDate = model.EndDate,
-                };
-
-                _context.Add(Bhyt);
-                _context.SaveChanges();
-                return Ok(Bhyt);
+                return Ok(_bhytRepo.Add(model));
             }
             catch
             {
@@ -69,24 +66,18 @@ namespace QuanLiPhongKham.Controllers.User
 
         //put data update
         [HttpPut("{id}")]
-        public IActionResult Update(int id, BHYTModel model)
+        public IActionResult Update(int id, BHYTUpdate_GetModel model)
         {
-            var Lists = _context.Bhyts.SingleOrDefault(e => e.BHYTId == id);
-
-            if (Lists != null)
+            var bhyt = _context.Bhyts.SingleOrDefault(e => e.BHYTId == id);
+            if (bhyt == null) return NotFound("Id not exist!");
+            try
             {
-                Lists.FullName = model.FullName;
-                Lists.PhoneNumber = model.PhoneNumber;
-                Lists.Address = model.Address;
-                Lists.Birthday = model.Birthday;
-                Lists.Professtion = model.Professtion;
-                Lists.StartDate = model.StartDate;
-                Lists.EndDate = model.EndDate;
-                Lists.Status = model.Status;
-                _context.SaveChanges();
-                return NoContent();
+                return Ok(_bhytRepo.Update(model));
             }
-            else { return NotFound(); }
+            catch
+            {
+                return NotFound();
+            }
         }
 
         //delete

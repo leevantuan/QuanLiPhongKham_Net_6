@@ -18,6 +18,8 @@ builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IDoctorRepsitory, DoctorRepository>();
 builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+builder.Services.AddScoped<IBHYTRepository, BHYTRepository>();
+builder.Services.AddScoped<IProvideNumberRepository, ProvideNumberRepository>();
 
 //Add automapper
 builder.Services.AddAutoMapper(typeof(Program));

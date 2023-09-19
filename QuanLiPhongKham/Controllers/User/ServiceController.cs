@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using QuanLiPhongKham.Data;
 using QuanLiPhongKham.Data.User;
 using QuanLiPhongKham.Models;
-using QuanLiPhongKham.Models.Updates;
+using QuanLiPhongKham.Models.Update_Get_Model;
 using QuanLiPhongKham.Services.IRepository;
 
 namespace QuanLiPhongKham.Controllers.User
@@ -67,7 +67,7 @@ namespace QuanLiPhongKham.Controllers.User
 
         //put data update
         [HttpPut("{id}")]
-        public IActionResult Update(int id, ServiceUpdate model)
+        public IActionResult Update(int id, ServiceUpdate_GetModel model)
         {
             if(model.ServiceId != id)
             {

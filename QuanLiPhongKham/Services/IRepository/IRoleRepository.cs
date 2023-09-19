@@ -1,17 +1,17 @@
 ﻿using QuanLiPhongKham.Models;
-using QuanLiPhongKham.Models.Updates;
+using QuanLiPhongKham.Models.Update_Get_Model;
 
 namespace QuanLiPhongKham.Services.IRepository
 {
     public interface IRoleRepository
     {
-        List<RoleUpdate> GetAll();
+        List<RoleUpdate_GetModel> GetAll();
 
-        RoleUpdate GetById(int id);
+        RoleUpdate_GetModel GetById(int id);
 
-        RoleUpdate Add(RoleModel role);
+        RoleUpdate_GetModel Add(RoleModel role);
 
-        void Update(RoleUpdate role);
+        void Update(RoleUpdate_GetModel role);
 
         void Delete(int id);
     }

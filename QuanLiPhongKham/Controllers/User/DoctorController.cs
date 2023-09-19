@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using QuanLiPhongKham.Data;
 using QuanLiPhongKham.Data.User;
 using QuanLiPhongKham.Models;
-using QuanLiPhongKham.Models.Updates;
+using QuanLiPhongKham.Models.Update_Get_Model;
 using QuanLiPhongKham.Services.IRepository;
 using System.Net;
 
@@ -67,7 +67,7 @@ namespace QuanLiPhongKham.Controllers.User
 
         //put data update
         [HttpPut("{id}")]
-        public IActionResult Update(int id, DoctorUpdate model)
+        public IActionResult Update(int id, DoctorUpdate_GetModel model)
         {
             var doctor = _context.Doctors.SingleOrDefault(e => e.DoctorId == id);
             if (doctor == null) return NotFound("Id not exist!");
@@ -85,15 +85,16 @@ namespace QuanLiPhongKham.Controllers.User
         [HttpDelete("{id}")]
         public IActionResult Remove(int id)
         {
-            var Lists = _context.Doctors.SingleOrDefault(doctor => doctor.DoctorId == id);
-
-            if (Lists != null)
+            var doctor = _context.Doctors.SingleOrDefault(e => e.DoctorId == id);
+            if (doctor == null) return NotFound("Id not exist!");
+            try
             {
-                _context.Doctors.Remove(Lists);
-                _context.SaveChanges();
-                return Ok();
+                return Ok(_doctorRepo.Delete(id));
             }
-            else { return NotFound(); }
+            catch
+            {
+                return NotFound();
+            }
         }
     }
 }

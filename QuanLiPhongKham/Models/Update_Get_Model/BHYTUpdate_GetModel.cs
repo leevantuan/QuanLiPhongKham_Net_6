@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace QuanLiPhongKham.Models.Updates
+namespace QuanLiPhongKham.Models.Update_Get_Model
 {
-    public class BHYTUpdate
+    public class BHYTUpdate_GetModel
     {
 
         public int BHYTId { get; set; }

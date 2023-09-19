@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace QuanLiPhongKham.Models.Updates
+namespace QuanLiPhongKham.Models.Update_Get_Model
 {
-    public class ServiceUpdate
+    public class ServiceUpdate_GetModel
     {
         public int ServiceId { get; set; }
 

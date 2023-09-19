@@ -7,22 +7,22 @@ using QuanLiPhongKham.Services.IRepository;
 
 namespace QuanLiPhongKham.Services.Repository
 {
-    public class DoctorRepository : IDoctorRepsitory
+    public class BHYTRepository : IBHYTRepository
     {
         private readonly MyContext _context;
         private readonly IMapper _mapper;
 
-        public DoctorRepository(MyContext context, IMapper mapper)
-        {
+        public BHYTRepository(MyContext context, IMapper mapper) 
+        { 
             _context = context;
             _mapper = mapper;
         }
-        public bool Add(DoctorModel _doctor)
+        public bool Add(BHYTModel _bhyt)
         {
             try
             {
-                var doctor = _mapper.Map<Doctor>(_doctor);
-                _context.Doctors.Add(doctor);
+                var bhyt = _mapper.Map<BHYT>(_bhyt);
+                _context.Bhyts.Add(bhyt);
                 var result = _context.SaveChanges();
                 if (result == 1) return true;
                 return false;
@@ -38,9 +38,9 @@ namespace QuanLiPhongKham.Services.Repository
         {
             try
             {
-                var doctor = _context.Doctors.Find(id);
-                if (doctor == null) return false;
-                _context.Doctors.Remove(doctor);
+                var bhyt = _context.Bhyts.Find(id);
+                if (bhyt == null) return false;
+                _context.Bhyts.Remove(bhyt);
                 _context.SaveChanges(true);
                 return true;
             }
@@ -50,26 +50,12 @@ namespace QuanLiPhongKham.Services.Repository
             }
         }
 
-        public List<DoctorUpdate_GetModel> GetAll()
+        public List<BHYTUpdate_GetModel> GetAll()
         {
             try
             {
-                List<Doctor> AllDoctor = _context.Doctors.ToList();
-                return _mapper.Map<List<DoctorUpdate_GetModel>>(AllDoctor);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
-        }
-
-        public DoctorModel GetById(int id)
-        {
-            try
-            {
-                var doctor = _context.Doctors.SingleOrDefault(e => e.DoctorId == id);
-                return _mapper.Map<DoctorModel>(doctor);
+                List<BHYT> bhyt = _context.Bhyts.ToList();
+                return _mapper.Map<List<BHYTUpdate_GetModel>>(bhyt);
             }
             catch (Exception)
             {
@@ -77,20 +63,33 @@ namespace QuanLiPhongKham.Services.Repository
             }
         }
 
-        public bool Update(DoctorUpdate_GetModel _doctor)
+        public BHYTModel GetById(int id)
         {
-            var doctor = _context.Doctors.FirstOrDefault(e => e.DoctorId == _doctor.DoctorId);
             try
             {
-                if (doctor == null) return false;
-                doctor.Professtional = _doctor.Professtional;
-                doctor.Status = _doctor.Status;
-                doctor.DateWork = _doctor.DateWork;
-                doctor.BirthDay = _doctor.BirthDay;
-                doctor.PhoneNumber = _doctor.PhoneNumber;
-                doctor.Address = _doctor.Address;
-                doctor.DoctorName = _doctor.DoctorName;
-                doctor.RoomId = _doctor.RoomId;
+                var bhyt = _context.Bhyts.SingleOrDefault(e => e.BHYTId == id);
+                return _mapper.Map<BHYTModel>(bhyt);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public bool Update(BHYTUpdate_GetModel _bhyt)
+        {
+            var bhyt = _context.Bhyts.FirstOrDefault(e => e.BHYTId == _bhyt.BHYTId);
+            try
+            {
+                if (bhyt == null) return false;
+                bhyt.FullName = _bhyt.FullName;
+                bhyt.PhoneNumber = _bhyt.PhoneNumber;
+                bhyt.Address = _bhyt.Address;
+                bhyt.Birthday = _bhyt.Birthday;
+                bhyt.Professtion = _bhyt.Professtion;
+                bhyt.StartDate = _bhyt.StartDate;
+                bhyt.EndDate = _bhyt.EndDate;
+                bhyt.Status = _bhyt.Status;
                 var result = _context.SaveChanges();
                 if (result == 1) return true;
                 return false;

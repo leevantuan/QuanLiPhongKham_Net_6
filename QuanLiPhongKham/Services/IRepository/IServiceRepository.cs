@@ -1,5 +1,5 @@
 ﻿using QuanLiPhongKham.Models;
-using QuanLiPhongKham.Models.Updates;
+using QuanLiPhongKham.Models.Update_Get_Model;
 
 namespace QuanLiPhongKham.Services.IRepository
 {
@@ -11,7 +11,7 @@ namespace QuanLiPhongKham.Services.IRepository
 
         public bool Add(ServiceModel role);
 
-        public bool Update(ServiceUpdate role);
+        public bool Update(ServiceUpdate_GetModel role);
 
         public bool Delete(int id);
     }

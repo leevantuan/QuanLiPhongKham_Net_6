@@ -2,7 +2,7 @@
 using QuanLiPhongKham.Data;
 using QuanLiPhongKham.Data.User;
 using QuanLiPhongKham.Models;
-using QuanLiPhongKham.Models.Updates;
+using QuanLiPhongKham.Models.Update_Get_Model;
 using QuanLiPhongKham.Services.IRepository;
 
 namespace QuanLiPhongKham.Services.Repository
@@ -80,7 +80,7 @@ namespace QuanLiPhongKham.Services.Repository
             }
         }
 
-        public bool Update(ServiceUpdate _service)
+        public bool Update(ServiceUpdate_GetModel _service)
         {
             try
             {

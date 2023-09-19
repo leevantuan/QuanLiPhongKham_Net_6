@@ -3,7 +3,7 @@ using QuanLiPhongKham.Data.Admin;
 using QuanLiPhongKham.Data.User;
 using QuanLiPhongKham.Models;
 using QuanLiPhongKham.Models.Authentication;
-using QuanLiPhongKham.Models.Updates;
+using QuanLiPhongKham.Models.Update_Get_Model;
 
 namespace TheBookStore.Helper
 {
@@ -20,8 +20,9 @@ namespace TheBookStore.Helper
             CreateMap<BHYT, BHYTModel>().ReverseMap();
 
             //full id
-            CreateMap<Doctor, DoctorUpdate>().ReverseMap();
-            CreateMap<Room, RoomUpdate>().ReverseMap();
+            CreateMap<Doctor, DoctorUpdate_GetModel>().ReverseMap();
+            CreateMap<Room, RoomUpdate_GetModel>().ReverseMap();
+            CreateMap<BHYT, BHYTUpdate_GetModel>().ReverseMap();
         }
     }
 }

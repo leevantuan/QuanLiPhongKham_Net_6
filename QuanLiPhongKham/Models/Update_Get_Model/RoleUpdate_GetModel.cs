@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace QuanLiPhongKham.Models.Updates
+namespace QuanLiPhongKham.Models.Update_Get_Model
 {
-    public class RoleUpdate
+    public class RoleUpdate_GetModel
     {
 
         public int RoleId { get; set; }

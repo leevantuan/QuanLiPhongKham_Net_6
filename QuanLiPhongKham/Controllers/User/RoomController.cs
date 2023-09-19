@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using QuanLiPhongKham.Data;
 using QuanLiPhongKham.Data.User;
 using QuanLiPhongKham.Models;
+using QuanLiPhongKham.Models.Update_Get_Model;
+using QuanLiPhongKham.Services.IRepository;
 
 namespace QuanLiPhongKham.Controllers.User
 {
@@ -11,18 +13,26 @@ namespace QuanLiPhongKham.Controllers.User
     public class RoomController : ControllerBase
     {
         private readonly MyContext _context;
+        private readonly IRoomRepository _roomRepo;
 
-        public RoomController(MyContext context)
+        public RoomController(MyContext context, IRoomRepository room)
         {
             _context = context;
+            _roomRepo = room;
         }
 
         //get danh sách trong API
         [HttpGet]
         public IActionResult GetAll()
         {
-            var Lists = _context.Rooms.ToList();
-            return Ok(Lists);
+            try
+            {
+                return Ok(_roomRepo.GetAll());
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
 
         //get data by id
@@ -30,13 +40,14 @@ namespace QuanLiPhongKham.Controllers.User
         public IActionResult GetById(int id)
         {
             //SingleOrDefault Methor tìm kiếm có hoặc không
-            var Lists = _context.Rooms.SingleOrDefault(room => room.RoomId == id);
-
-            if (Lists != null)
+            try
             {
-                return Ok(Lists);
+                return Ok(_roomRepo.GetById(id));
             }
-            else { return NotFound(); }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         //post data create
@@ -45,14 +56,7 @@ namespace QuanLiPhongKham.Controllers.User
         {
             try
             {
-                var room = new Room
-                {
-                    RoomName = model.RoomName,
-                };
-
-                _context.Add(room);
-                _context.SaveChanges();
-                return Ok(room);
+                return Ok(_roomRepo.Add(model));
             }
             catch
             {
@@ -63,33 +67,34 @@ namespace QuanLiPhongKham.Controllers.User
 
         //put data update
         [HttpPut("{id}")]
-        public IActionResult Update(int id, RoomModel model)
+        public IActionResult Update(int id, RoomUpdate_GetModel model)
         {
-            var Lists = _context.Rooms.SingleOrDefault(room => room.RoomId == id);
-
-            if (Lists != null)
+            var _rooms = _context.Rooms.SingleOrDefault(room => room.RoomId == id);
+            if(_rooms == null) { return  BadRequest(); }
+            try
             {
-                Lists.RoomName = model.RoomName;
-                Lists.Status = model.Status;
-                _context.SaveChanges();
-                return NoContent();
+                return Ok(_roomRepo.Update(model));
             }
-            else { return NotFound(); }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         //delete
         [HttpDelete("{id}")]
         public IActionResult Remove(int id)
         {
-            var Lists = _context.Rooms.SingleOrDefault(room => room.RoomId == id);
-
-            if (Lists != null)
+            var _rooms = _context.Rooms.SingleOrDefault(room => room.RoomId == id);
+            if (_rooms == null) { return BadRequest(); }
+            try
             {
-                _context.Rooms.Remove(Lists);
-                _context.SaveChanges();
-                return Ok();
+                return Ok(_roomRepo.Delete(id));
             }
-            else { return NotFound(); }
+            catch
+            {
+                return BadRequest();
+            }
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace QuanLiPhongKham.Models.Updates
+namespace QuanLiPhongKham.Models.Update_Get_Model
 {
-    public class DoctorUpdate
+    public class DoctorUpdate_GetModel
     {
         public int DoctorId { get; set; }
 

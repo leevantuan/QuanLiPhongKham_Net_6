@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using QuanLiPhongKham.Data;
 using QuanLiPhongKham.Data.User;
 using QuanLiPhongKham.Models;
+using QuanLiPhongKham.Models.Update_Get_Model;
+using QuanLiPhongKham.Services.IRepository;
 
 namespace QuanLiPhongKham.Controllers.User
 {
@@ -11,32 +13,40 @@ namespace QuanLiPhongKham.Controllers.User
     public class ProvideNumberController : ControllerBase
     {
         private readonly MyContext _context;
+        private readonly IProvideNumberRepository _provideRepo;
 
-        public ProvideNumberController(MyContext context)
+        public ProvideNumberController(MyContext context, IProvideNumberRepository provide)
         {
             _context = context;
+            _provideRepo = provide;
         }
 
         //get danh sách trong API
         [HttpGet]
         public IActionResult GetAll()
         {
-            var Lists = _context.ProvideNumbers.ToList();
-            return Ok(Lists);
+            try
+            {
+                return Ok(_provideRepo.GetAll());
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
 
         //get data by id
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            //SingleOrDefault Methor tìm kiếm có hoặc không
-            var Lists = _context.ProvideNumbers.SingleOrDefault(provide => provide.ProvideNumberId == id);
-
-            if (Lists != null)
+            try
             {
-                return Ok(Lists);
+                return Ok(_provideRepo.GetById(id));
             }
-            else { return NotFound(); }
+            catch
+            {
+                return NotFound();
+            }
         }
 
         //post data create
@@ -45,19 +55,7 @@ namespace QuanLiPhongKham.Controllers.User
         {
             try
             {
-                var provide = new ProvideNumber
-                {
-                    FullName = model.FullName,
-                    PhoneNumber = model.PhoneNumber,
-                    StartDate = model.StartDate,
-                    EndtDate = model.EndtDate,
-                    Price = model.Price,
-                    ServiceId = model.ServiceId,
-                };
-
-                _context.Add(provide);
-                _context.SaveChanges();
-                return Ok(provide);
+                return Ok(_provideRepo.Add(model));
             }
             catch
             {
@@ -68,30 +66,25 @@ namespace QuanLiPhongKham.Controllers.User
 
         //put data update
         [HttpPut("{id}")]
-        public IActionResult Update(int id, ProvideNumberModel model)
+        public IActionResult Update(int id, ProvideNumberUpdate_GetModel model)
         {
-            var Lists = _context.ProvideNumbers.SingleOrDefault(provide => provide.ProvideNumberId == id);
-
-            if (Lists != null)
+            var provide = _context.ProvideNumbers.SingleOrDefault(e => e.ProvideNumberId == id);
+            if (provide == null) return NotFound("Id not exist!");
+            try
             {
-                Lists.FullName = model.FullName;
-                Lists.PhoneNumber = model.PhoneNumber;
-                Lists.StartDate = model.StartDate;
-                Lists.EndtDate = model.EndtDate;
-                Lists.Price = model.Price;
-                Lists.ServiceId = model.ServiceId;
-                Lists.Status = model.Status;
-                _context.SaveChanges();
-                return NoContent();
+                return Ok(_provideRepo.Update(model));
             }
-            else { return NotFound(); }
+            catch
+            {
+                return NotFound();
+            }
         }
 
         //delete
         [HttpDelete("{id}")]
         public IActionResult Remove(int id)
         {
-            var Lists = _context.ProvideNumbers.SingleOrDefault(provide => provide.ProvideNumberId == id);
+            var Lists = _context.ProvideNumbers.SingleOrDefault(e => e.ProvideNumberId == id);
 
             if (Lists != null)
             {

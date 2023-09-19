@@ -1,7 +1,7 @@
 ﻿using QuanLiPhongKham.Data;
 using QuanLiPhongKham.Data.Admin;
 using QuanLiPhongKham.Models;
-using QuanLiPhongKham.Models.Updates;
+using QuanLiPhongKham.Models.Update_Get_Model;
 using QuanLiPhongKham.Services.IRepository;
 using System.Data;
 
@@ -16,7 +16,7 @@ namespace QuanLiPhongKham.Services.Repository
             _context = context;
         }
 
-        public RoleUpdate Add(RoleModel role)
+        public RoleUpdate_GetModel Add(RoleModel role)
         {
             var _role = new Role
             {
@@ -27,7 +27,7 @@ namespace QuanLiPhongKham.Services.Repository
             _context.Add(_role);
             _context.SaveChanges();
 
-            return new RoleUpdate
+            return new RoleUpdate_GetModel
             {
                 RoleId = _role.RoleId,
                 RoleName = _role.RoleName,
@@ -46,9 +46,9 @@ namespace QuanLiPhongKham.Services.Repository
             }
         }
 
-        public List<RoleUpdate> GetAll()
+        public List<RoleUpdate_GetModel> GetAll()
         {
-            var list = _context.Roles.Select(role => new RoleUpdate
+            var list = _context.Roles.Select(role => new RoleUpdate_GetModel
             {
                 RoleId = role.RoleId,
                 RoleName = role.RoleName,
@@ -58,12 +58,12 @@ namespace QuanLiPhongKham.Services.Repository
             return list.ToList();
         }
 
-        public RoleUpdate GetById(int id)
+        public RoleUpdate_GetModel GetById(int id)
         {
             var list = _context.Roles.SingleOrDefault(role => role.RoleId == id);
             if (list != null)
             {
-                return new RoleUpdate
+                return new RoleUpdate_GetModel
                 {
                     RoleId = list.RoleId,
                     RoleName = list.RoleName,
@@ -77,7 +77,7 @@ namespace QuanLiPhongKham.Services.Repository
             }
         }
 
-        public void Update(RoleUpdate _role)
+        public void Update(RoleUpdate_GetModel _role)
         {
             var list = _context.Roles.SingleOrDefault(role => role.RoleId == _role.RoleId);
             if (list != null)
