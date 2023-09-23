@@ -5,6 +5,9 @@ namespace QuanLiPhongKham.Models
     public class BHYTModel
     {
         [Required]
+        public string? _NumberId { get; set; } = null;
+
+        [Required]
         [MaxLength(50)]
         public string FullName { get; set; } = string.Empty;
 

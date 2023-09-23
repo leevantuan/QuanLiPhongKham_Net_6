@@ -11,6 +11,9 @@ namespace QuanLiPhongKham.Data.User
         public int BHYTId { get; set; }
 
         [Required]
+        public string? _NumberId { get; set; } = null;
+
+        [Required]
         [MaxLength(50)]
         public string FullName { get; set; } = string.Empty;
 

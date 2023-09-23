@@ -20,9 +20,12 @@ namespace TheBookStore.Helper
             CreateMap<BHYT, BHYTModel>().ReverseMap();
 
             //full id
+            CreateMap<Account, AccountUpdate_GetModel>().ReverseMap();
             CreateMap<Doctor, DoctorUpdate_GetModel>().ReverseMap();
             CreateMap<Room, RoomUpdate_GetModel>().ReverseMap();
             CreateMap<BHYT, BHYTUpdate_GetModel>().ReverseMap();
+            CreateMap<ProvideNumber, ProvideNumberUpdate_GetModel>().ReverseMap();
+            CreateMap<Service, ServiceUpdate_GetModel>().ReverseMap();
         }
     }
 }

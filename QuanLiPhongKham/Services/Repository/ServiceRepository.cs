@@ -54,12 +54,12 @@ namespace QuanLiPhongKham.Services.Repository
             }
         }
 
-        public List<ServiceModel> GetAll()
+        public List<ServiceUpdate_GetModel> GetAll()
         {
             try
             {
                 List<Service> AllService = _context.Services.ToList();
-                return _mapper.Map<List<ServiceModel>>(AllService);
+                return _mapper.Map<List<ServiceUpdate_GetModel>>(AllService);
             }
             catch (Exception)
             {
@@ -84,19 +84,15 @@ namespace QuanLiPhongKham.Services.Repository
         {
             try
             {
-                var service = _context.Services.FirstOrDefault(e => e.RoomId == _service.RoomId);
+                var service = _context.Services.FirstOrDefault(e => e.ServiceId == _service.ServiceId);
                 if (service != null)
                 {
-                    if (service.ServiceId == _service.ServiceId)
-                    {
-                        service.ServiceName = _service.ServiceName;
-                        service.Price = _service.Price;
-                        service.Status = _service.Status;
-                        service.RoomId = _service.RoomId;
-                        var result = _context.SaveChanges();
-                        if (result == 1) return true;
-                        return false;
-                    }
+                    service.ServiceName = _service.ServiceName;
+                    service.Price = _service.Price;
+                    service.Status = _service.Status;
+                    service.RoomId = _service.RoomId;
+                    var result = _context.SaveChanges();
+                    if (result == 1) return true;
                     return false;
                 }
                 return false;

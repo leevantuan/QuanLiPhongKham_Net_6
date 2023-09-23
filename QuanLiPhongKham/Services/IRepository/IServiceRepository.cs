@@ -5,7 +5,7 @@ namespace QuanLiPhongKham.Services.IRepository
 {
     public interface IServiceRepository
     {
-        public List<ServiceModel> GetAll();
+        public List<ServiceUpdate_GetModel> GetAll();
 
         public ServiceModel GetById(int id);
 

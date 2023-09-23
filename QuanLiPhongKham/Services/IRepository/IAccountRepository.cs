@@ -2,6 +2,7 @@
 using QuanLiPhongKham.Models;
 using QuanLiPhongKham.Models.Authentication;
 using QuanLiPhongKham.Models.Login_User;
+using QuanLiPhongKham.Models.Update_Get_Model;
 
 namespace QuanLiPhongKham.Services.IRepository
 {
@@ -9,7 +10,7 @@ namespace QuanLiPhongKham.Services.IRepository
     {
         public LoginResponseModel Login(LoginModel model);
         public bool SignUp(SignUpModel model);
-        public List<AccountModel> GetAllAccount();
+        public List<AccountUpdate_GetModel> GetAllAccount();
         public AccountModel GetAccountByEmail(string email);
         public bool AddAccount(Account account);
         public bool UpdateAccount(AccountModel account);

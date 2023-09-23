@@ -5,6 +5,9 @@ namespace QuanLiPhongKham.Models.Update_Get_Model
     public class ProvideNumberUpdate_GetModel
     {
         [Required]
+        public string? _NumberId { get; set; } = null;
+
+        [Required]
         public int ProvideNumberId { get; set; }
 
         [Required]

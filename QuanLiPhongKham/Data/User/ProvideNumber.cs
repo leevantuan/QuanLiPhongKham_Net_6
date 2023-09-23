@@ -11,6 +11,9 @@ namespace QuanLiPhongKham.Data.User
         public int ProvideNumberId { get; set; }
 
         [Required]
+        public string? _NumberId { get; set; } = null;
+
+        [Required]
         public string FullName { get; set; } = string.Empty;
 
         [Required]

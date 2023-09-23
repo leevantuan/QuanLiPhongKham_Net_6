@@ -5,6 +5,8 @@ namespace QuanLiPhongKham.Models.Update_Get_Model
     public class BHYTUpdate_GetModel
     {
 
+        public string? _NumberId { get; set; }
+
         public int BHYTId { get; set; }
 
         public string FullName { get; set; } = string.Empty;

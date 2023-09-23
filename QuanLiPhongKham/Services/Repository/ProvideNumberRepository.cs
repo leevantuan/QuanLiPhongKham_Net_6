@@ -55,8 +55,8 @@ namespace QuanLiPhongKham.Services.Repository
         {
             try
             {
-                List<ProvideNumber> All = _context.ProvideNumbers.ToList();
-                return _mapper.Map<List<ProvideNumberUpdate_GetModel>>(All);
+                List<ProvideNumber> AllProvideNumber = _context.ProvideNumbers.ToList();
+                return _mapper.Map<List<ProvideNumberUpdate_GetModel>>(AllProvideNumber);
             }
             catch (Exception)
             {
@@ -83,6 +83,7 @@ namespace QuanLiPhongKham.Services.Repository
             try
             {
                 if (provideNumber == null) return false;
+                provideNumber._NumberId = _provide._NumberId;
                 provideNumber.FullName = _provide.FullName;
                 provideNumber.Status = _provide.Status;
                 provideNumber.PhoneNumber = _provide.PhoneNumber;

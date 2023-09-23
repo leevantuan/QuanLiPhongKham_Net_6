@@ -5,6 +5,9 @@ namespace QuanLiPhongKham.Models
     public class ProvideNumberModel
     {
         [Required]
+        public string? _NumberId { get; set; } = null;
+
+        [Required]
         public string FullName { get; set; } = String.Empty;
 
         [Required]

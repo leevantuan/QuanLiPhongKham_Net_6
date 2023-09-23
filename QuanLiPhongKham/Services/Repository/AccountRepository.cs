@@ -4,6 +4,7 @@ using QuanLiPhongKham.Data.Admin;
 using QuanLiPhongKham.Models;
 using QuanLiPhongKham.Models.Authentication;
 using QuanLiPhongKham.Models.Login_User;
+using QuanLiPhongKham.Models.Update_Get_Model;
 using QuanLiPhongKham.Services.IRepository;
 
 namespace QuanLiPhongKham.Services.Repository
@@ -52,12 +53,12 @@ namespace QuanLiPhongKham.Services.Repository
             }
         }
 
-        public List<AccountModel> GetAllAccount()
+        public List<AccountUpdate_GetModel> GetAllAccount()
         {
             try
             {
                 List<Account> AllAccount = _context.Accounts.ToList();
-                return _mapper.Map<List<AccountModel>>(AllAccount);
+                return _mapper.Map<List<AccountUpdate_GetModel>>(AllAccount);
 
             }
             catch (Exception)

@@ -82,6 +82,7 @@ namespace QuanLiPhongKham.Services.Repository
             try
             {
                 if (bhyt == null) return false;
+                bhyt._NumberId = _bhyt._NumberId;
                 bhyt.FullName = _bhyt.FullName;
                 bhyt.PhoneNumber = _bhyt.PhoneNumber;
                 bhyt.Address = _bhyt.Address;
